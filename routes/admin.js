@@ -1,35 +1,14 @@
-const path = require('path');
+// const path = require('path');
 
 const express = require('express');
 
-const rootDir = require('../util/path');
+const productsController = require('../controllers/products');
 
 const router = express.Router();
 
-const products = [];
-
 // /admin/add-product => GET
-router.get('/add-product', (req, res, next) => {
-    // res.sendFile(
-    //     path.join(rootDir, 'views','add-product.html')
-    // );
-    // ***** pug
-    res.render('add-product', {
-        pageTitle: 'Add product',
-        path: '/admin/add-product',
-        formsCSS: true,
-        productsCSS: true,
-        activeAddProduct: true
-    });
-});// to add middlewares, next param is a function
-
+router.get('/add-product', productsController.getAddProducts);
 // /admin/add-product => POST
-router.post('/add-product', (req, res, next) => {
-    console.log(req.body);// body is added by express
-    products.push({title: req.body.title});
-    res.redirect('/');
-});
+router.post('/add-product', productsController.postAddProduct);
 
-// module.exports = router;
-exports.routes = router;
-exports.products = products;
+module.exports = router;
